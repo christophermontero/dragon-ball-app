@@ -9,7 +9,7 @@ const Card = ({ name, description, type, id }) => {
       <div className="card-body">
         <h3 className="card-title">
           <p className="card-text">
-            <Link className="card-link" to={""}>
+            <Link className="card-link" to={`/character/${id}`}>
               more
             </Link>
           </p>
