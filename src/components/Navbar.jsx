@@ -1,6 +1,13 @@
 import React from "react";
+import { NavLink, useHistory } from "react-router-dom";
 
 const Navbar = () => {
+  const history = useHistory();
+
+  const handleLogout = () => {
+    history.replace("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-info">
       <div className="container-fluid">
@@ -19,23 +26,41 @@ const Navbar = () => {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <NavLink
+                activeClassName="active text-white"
+                className="nav-link"
+                aria-current="page"
+                to="/men"
+              >
                 Men
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink
+                activeClassName="active text-white"
+                className="nav-link"
+                to="/women"
+              >
                 Women
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink
+                activeClassName="active text-white"
+                className="nav-link"
+                to="/search"
+              >
                 Search
-              </a>
+              </NavLink>
             </li>
           </ul>
+          <div className="d-flex">
+            <button className="btn btn-danger" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>
