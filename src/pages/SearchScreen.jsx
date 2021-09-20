@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
+import { Characters } from "../models/Characters";
+import Card from "../components/Card";
 
 const SearchScreen = ({ history }) => {
-  const [inputValue, setInputValue] = useState("");
+  const location = useLocation();
+
+  const { char = "" } = queryString.parse(location.search);
+
+  const [inputValue, setInputValue] = useState(char);
+  const [characters, setCharacters] = useState([]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -12,6 +21,18 @@ const SearchScreen = ({ history }) => {
     e.preventDefault();
     history.push(`?char=${inputValue}`);
   };
+
+  useEffect(() => {
+    if (inputValue.trim() !== "") {
+      const val = inputValue.toLocaleLowerCase();
+      const chars2LowerCase = Characters.filter((char) =>
+        char.name.toLocaleLowerCase().includes(val)
+      );
+      setCharacters(chars2LowerCase);
+    } else {
+      setCharacters([]);
+    }
+  }, [inputValue]);
 
   return (
     <div className="container">
@@ -36,6 +57,17 @@ const SearchScreen = ({ history }) => {
               Search
             </button>
           </form>
+        </div>
+        <div className="col-6">
+          <h2>Results: {characters.length}</h2>
+          {!characters.length && (
+            <div className="alert alert-warning text-center">
+              Please search a character
+            </div>
+          )}
+          {characters.map((char) => (
+            <Card key={char.id} {...char} />
+          ))}
         </div>
       </div>
     </div>
