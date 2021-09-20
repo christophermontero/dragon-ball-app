@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
-const SearchScreen = () => {
+const SearchScreen = ({ history }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    history.push(`?char=${inputValue}`);
+  };
+
   return (
     <div className="container">
       <h1>Search Screen</h1>
@@ -8,7 +20,7 @@ const SearchScreen = () => {
       <div className="row">
         <div className="col-6">
           <h2>Search</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label className="form-label w-100">
               Character:{" "}
               <input
@@ -16,7 +28,8 @@ const SearchScreen = () => {
                 type="text"
                 className="form-control"
                 autoComplete="off"
-                value={""}
+                value={inputValue}
+                onChange={handleChange}
               />
             </label>
             <button type="submit" className="btn btn-info w-100">
