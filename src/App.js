@@ -5,21 +5,21 @@ import { AuthReducer } from "./reducers/AuthReducer";
 
 const init = () => {
   return (
-    JSON.parse(JSON.stringify(localStorage.getItem("loged"))) || {
-      loged: false
+    JSON.parse(JSON.stringify(localStorage.getItem("auth"))) || {
+      isLogged: false
     }
   );
 };
 
 const App = () => {
-  const { loged, dispatch } = useReducer(AuthReducer, {}, init);
+  const [isLogged, dispatch] = useReducer(AuthReducer, {}, init);
 
   useEffect(() => {
-    localStorage.setItem("loged", JSON.stringify(loged));
-  }, [loged]);
+    localStorage.setItem("auth", JSON.stringify(isLogged));
+  }, [isLogged]);
 
   return (
-    <AuthContext.Provider value={{ loged, dispatch }}>
+    <AuthContext.Provider value={{ isLogged, dispatch }}>
       <LoginRouter />
     </AuthContext.Provider>
   );

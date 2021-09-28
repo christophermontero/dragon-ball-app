@@ -19,10 +19,10 @@ const AppRouter = () => {
           path="/character/:idCharacter"
           component={CharacterScreen}
         />
+        <Redirect to="/men" />
       </Switch>
     </>
   );
 };
-//<Redirect to="/men" />
 
 export default AppRouter;
