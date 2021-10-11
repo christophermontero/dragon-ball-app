@@ -1,14 +1,16 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import MenScreen from "../pages/MenScreen";
-import WomenScreen from "../pages/WomenScreen";
-import SearchScreen from "../pages/SearchScreen";
-import CharacterScreen from "../pages/CharacterScreen";
-import Navbar from "../components/Navbar";
+import Loader from "../components/Loader";
+
+const Navbar = lazy(() => import("../components/Navbar"));
+const CharacterScreen = lazy(() => import("../pages/CharacterScreen"));
+const MenScreen = lazy(() => import("../pages/MenScreen"));
+const WomenScreen = lazy(() => import("../pages/WomenScreen"));
+const SearchScreen = lazy(() => import("../pages/SearchScreen"));
 
 const AppRouter = () => {
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       <Navbar />
       <Switch>
         <Route exact path="/men" component={MenScreen} />
@@ -21,7 +23,7 @@ const AppRouter = () => {
         />
         <Redirect to="/men" />
       </Switch>
-    </>
+    </Suspense>
   );
 };
 
